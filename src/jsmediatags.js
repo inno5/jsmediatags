@@ -260,6 +260,12 @@ class Config {
       timeoutInSec: timeoutInSec
     });
   }
+
+  static setRequestHeaders(requestHeaders) {
+    XhrFileReader.setConfig({
+      requestHeaders: requestHeaders
+    });
+  }
 }
 
 Config

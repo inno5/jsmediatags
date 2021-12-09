@@ -251,7 +251,16 @@ class XhrFileReader extends MediaFileReader {
     if (range) {
       this._setRequestHeader(xhr, "Range", "bytes=" + range[0] + "-" + range[1]);
     }
+
     this._setRequestHeader(xhr, "If-Modified-Since", "Sat, 01 Jan 1970 00:00:00 GMT");
+
+    if (XhrFileReader._config.requestHeaders) {
+      for(var i = 0; i < XhrFileReader._config.requestHeaders.length; i++){
+        var header = XhrFileReader._config.requestHeaders[i];
+        this._setRequestHeader(xhr, header.key, header.value);
+      }
+    }
+
     xhr.send(null);
   }
 
@@ -314,7 +323,8 @@ class XhrFileReader extends MediaFileReader {
 XhrFileReader._config = {
   avoidHeadRequests: false,
   disallowedXhrHeaders: [],
-  timeoutInSec: 30
+  timeoutInSec: 30,
+  requestHeaders: [],
 };
 
 module.exports = XhrFileReader;
